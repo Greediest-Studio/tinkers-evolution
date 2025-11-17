@@ -12,7 +12,7 @@ plugins {
     id("maven-publish")
     id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.7"
     id("eclipse")
-    id("com.gtnewhorizons.retrofuturagradle") version "1.3.24-1-ge8cce0a" // custom local build
+    id("com.gtnewhorizons.retrofuturagradle") version "1.3.+" // custom local build
 }
 
 /*
@@ -177,7 +177,7 @@ dependencies { // THE BEAST
     @Suppress("UNCHECKED_CAST")
     fun <T> deobf(depSpec: T): T = rfg.deobf(depSpec) as T
 
-    api("io.github.phantamanta44.libnine:libnine-1.12.2:1.2.1")
+    api(deobf("curse.maven:libnine-1.12.2-322344:6790812"))
     api(deobf("mezz.jei:jei_1.12.2:4.15.0.293"))
     api(deobf("slimeknights.mantle:Mantle:1.12-1.3.3.56"))
     api(deobf("slimeknights:TConstruct:1.12.2-2.13.0.184"))

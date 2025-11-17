@@ -1152,100 +1152,116 @@ public class TconEvoConfig {
 
     public static class DraconicEvolution {
 
-        @Config.Comment("The base RF capacity of wyvern tools and armour.")
-        @Config.RangeInt(min = 1)
-        public int baseRfCapacityWyvern = 4000000;
-
-        @Config.Comment("The base RF capacity of draconic tools and armour.")
-        @Config.RangeInt(min = 1)
-        public int baseRfCapacityDraconic = 16000000;
-
-        @Config.Comment("The base RF capacity of chaotic tools and armour.")
-        @Config.RangeInt(min = 1)
-        public int baseRfCapacityChaotic = 64000000;
-
-        public int getBaseRfCapacity(int tier) {
-            return triSwitch(tier, baseRfCapacityWyvern, baseRfCapacityDraconic, baseRfCapacityChaotic, 1);
+        public Long getBaseRfCapacity(int tier) {
+            switch (tier) {
+                case 1 :
+                    return 4000000L;
+                case 2 :
+                    return 16000000L;
+                case 3 :
+                    return 64000000L;
+                case 4 :
+                    return 256000000L;
+                case 5 :
+                    return 1024000000L;
+                case 6 :
+                    return 4096000000L;
+                case 7 :
+                    return 16384000000L;
+                case 8 :
+                    return 65536000000L;
+                case 9 :
+                    return 262144000000L;
+                case 10 :
+                    return 1048576000000L;
+            }
+            return 1L;
         }
 
-        @Config.Comment("The maximum RF transfer rate for wyvern tools and armour.")
-        @Config.RangeInt(min = 1)
-        public int rfTransferWyvern = 512000;
-
-        @Config.Comment("The maximum RF transfer rate for draconic tools and armour.")
-        @Config.RangeInt(min = 1)
-        public int rfTransferDraconic = 1000000;
-
-        @Config.Comment("The maximum RF transfer rate for chaotic tools and armour.")
-        @Config.RangeInt(min = 1)
-        public int rfTransferChaotic = 4000000;
-
-        public int getRfTransfer(int tier) {
-            return triSwitch(tier, rfTransferWyvern, rfTransferDraconic, rfTransferChaotic, 1);
-        }
-
-        @Config.Comment("The energy cost per operation for wyvern tools.")
-        @Config.RangeInt(min = 0)
-        public int operationEnergyWyvern = 1024;
-
-        @Config.Comment("The energy cost per operation for draconic tools.")
-        @Config.RangeInt(min = 0)
-        public int operationEnergyDraconic = 1024;
-
-        @Config.Comment("The energy cost per operation for chaotic tools.")
-        @Config.RangeInt(min = 0)
-        public int operationEnergyChaotic = 1024;
+        public long getRfTransfer(int tier) {
+            switch (tier) {
+                case 1:
+                    return 512000;
+                case 2:
+                    return 1000000;
+                case 3:
+                    return 4000000;
+                case 4:
+                    return 16000000L;
+                case 5:
+                    return 64000000L;
+                case 6:
+                    return 256000000L;
+                case 7:
+                    return 1024000000L;
+                case 8:
+                    return 4096000000L;
+                case 9:
+                    return 16384000000L;
+                case 10:
+                    return 65536000000L;
+                }
+            return 1L;
+            }
 
         public int getOperationEnergy(int tier) {
-            return triSwitch(tier, operationEnergyWyvern, operationEnergyDraconic, operationEnergyChaotic, 1);
+            return 1024;
         }
-
-        @Config.Comment("The base shield capacity for wyvern armour. Only useful with Construct's Armoury.")
-        @Config.RangeInt(min = 0)
-        public int baseShieldCapacityWyvern = 256;
-
-        @Config.Comment("The base shield capacity for draconic armour. Only useful with Construct's Armoury.")
-        @Config.RangeInt(min = 0)
-        public int baseShieldCapacityDraconic = 512;
-
-        @Config.Comment("The base shield capacity for chaotic armour. Only useful with Construct's Armoury.")
-        @Config.RangeInt(min = 0)
-        public int baseShieldCapacityChaotic = 1024;
 
         public int getBaseShieldCapacity(int tier) {
-            return triSwitch(tier, baseShieldCapacityWyvern, baseShieldCapacityDraconic, baseShieldCapacityChaotic, 0);
-        }
-
-        @Config.Comment("The base shield recovery rate for wyvern armour. Only useful with Construct's Armoury.")
-        @Config.RangeDouble(min = 0D)
-        public double baseShieldRecoveryWyvern = 2D;
-
-        @Config.Comment("The base shield recovery rate for draconic armour. Only useful with Construct's Armoury.")
-        @Config.RangeDouble(min = 0D)
-        public double baseShieldRecoveryDraconic = 4D;
-
-        @Config.Comment("The base shield recovery rate for chaotic armour. Only useful with Construct's Armoury.")
-        @Config.RangeDouble(min = 0D)
-        public double baseShieldRecoveryChaotic = 7D;
+            switch (tier) {
+                case 1:
+                    return 256;
+                case 2:
+                    return 512;
+                case 3:
+                    return 1024;
+                case 4:
+                    return 2048;
+                case 5:
+                    return 4096;
+                case 6:
+                    return 8192;
+                case 7:
+                    return 16384;
+                case 8:
+                    return 32768;
+                case 9:
+                    return 65536;
+                case 10:
+                    return 131072;
+                }
+            return 0;
+            }
 
         public double getBaseShieldRecovery(int tier) {
-            return triSwitch(tier, baseShieldRecoveryWyvern, baseShieldRecoveryDraconic, baseShieldRecoveryChaotic, 0D);
-        }
-
-        @Config.Comment("The energy cost per shield point for wyvern armour. Only useful with Construct's Armoury.")
-        @Config.RangeInt(min = 0)
-        public int shieldRecoveryEnergyWyvern = 1000;
-
-        @Config.Comment("The energy cost per shield point for draconic armour. Only useful with Construct's Armoury.")
-        @Config.RangeInt(min = 0)
-        public int shieldRecoveryEnergyDraconic = 1000;
-
-        @Config.Comment("The energy cost per shield point for chaotic armour. Only useful with Construct's Armoury.")
-        @Config.RangeInt(min = 0)
-        public int shieldRecoveryEnergyChaotic = 1000;
+            switch (tier) {
+                case 1:
+                    return 2.0D;
+                case 2:
+                    return 4.0D;
+                case 3:
+                    return 7.0D;
+                case 4:
+                    return 13.0D;
+                case 5:
+                    return 25.0D;
+                case 6:
+                    return 49.0D;
+                case 7:
+                    return 97.0D;
+                case 8:
+                    return 193.0D;
+                case 9:
+                    return 385.0D;
+                case 10:
+                    return 769.0D;
+                }
+            return 0.0D;
+            }
 
         public int getShieldRecoveryEnergy(int tier) {
-            return triSwitch(tier, shieldRecoveryEnergyWyvern, shieldRecoveryEnergyDraconic, shieldRecoveryEnergyChaotic, 0);
+            return 1000;
         }
 
         @Config.Comment({
@@ -1320,20 +1336,6 @@ public class TconEvoConfig {
                 "Only useful with both Construct's Armoury and Tinkers Tool Leveling installed."
         })
         public boolean shieldedDamageGrantsToolXp = false;
-
-        private static <T> T triSwitch(int tier, T wyvern, T draconic, T chaotic, T defaultValue) {
-            switch (tier) {
-                case 1:
-                    return wyvern;
-                case 2:
-                    return draconic;
-                case 3:
-                    return chaotic;
-                default:
-                    return defaultValue;
-            }
-        }
-
     }
 
     @Config.Comment("Configuration for the Elenai Dodge 2 module.")

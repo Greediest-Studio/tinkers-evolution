@@ -105,7 +105,7 @@ public class TconEvoArmourTraits {
 
     // draconic evolution
     public static final ArmourTraitEvolved[] TRAIT_EVOLVED = {
-            new ArmourTraitEvolved(1), new ArmourTraitEvolved(2), new ArmourTraitEvolved(3)
+            new ArmourTraitEvolved(1), new ArmourTraitEvolved(2), new ArmourTraitEvolved(3), new ArmourTraitEvolved(4), new ArmourTraitEvolved(5), new ArmourTraitEvolved(6), new ArmourTraitEvolved(7), new ArmourTraitEvolved(8), new ArmourTraitEvolved(9), new ArmourTraitEvolved(10)
     };
     public static final ArmourModDraconic MOD_DRACONIC_ENERGY = new ArmourModDraconic(NameConst.MOD_DRACONIC_ENERGY);
     public static final ArmourModDraconic MOD_DRACONIC_SHIELD_CAPACITY = new ArmourModDraconic(NameConst.MOD_DRACONIC_SHIELD_CAPACITY);

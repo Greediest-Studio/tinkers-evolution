@@ -54,7 +54,7 @@ public class TraitEvolved extends StackableTrait implements EnergeticModifier {
     }
 
     public TraitEvolved(int level) {
-        super(NameConst.TRAIT_EVOLVED, COLOUR, 3, level);
+        super(NameConst.TRAIT_EVOLVED, COLOUR, 10, level);
         if (level == 1) {
             TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.TRAIT_EVOLVED, s -> new CapabilityBroker()
                     .with(CapabilityEnergy.ENERGY, new EvolvedCap(s)));
@@ -66,7 +66,6 @@ public class TraitEvolved extends StackableTrait implements EnergeticModifier {
     public void applyEffect(NBTTagCompound rootCompound, NBTTagCompound modifierTag) {
         if (modifierTag.getInteger("level") == 0) {
             super.applyEffect(rootCompound, modifierTag);
-            rootCompound.setBoolean(ModReinforced.TAG_UNBREAKABLE, true);
 
             // add draconic modifiers
             for (ModifierDraconic mod : ModifierDraconic.allMods) {
@@ -100,13 +99,7 @@ public class TraitEvolved extends StackableTrait implements EnergeticModifier {
 
     @Override
     public int onToolHeal(ItemStack tool, int amount, int newAmount, EntityLivingBase entity) {
-        if (!isCanonical(this, tool)) {
-            return newAmount;
-        }
-        if (tool.getItem() instanceof ProjectileCore) {
-            updateProjectileAmmo(tool);
-        }
-        return 0; // no way out
+        return newAmount;
     }
 
     @Override
@@ -208,12 +201,16 @@ public class TraitEvolved extends StackableTrait implements EnergeticModifier {
 
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate, boolean ignoreTfrRate) {
-            int tier = getEvolvedTier(stack);
-            int stored = getEnergyStored(), capacity = getMaxEnergyStored(tier);
+            int tier = TraitEvolved.getEvolvedTier(this.stack);
+            int stored = getEnergyStored();
+            int capacity = getMaxEnergyStored(tier);
             int toTransfer = Math.min(maxReceive, capacity - stored);
             if (!ignoreTfrRate) {
-                toTransfer = Math.min(toTransfer, TconEvoConfig.moduleDraconicEvolution.getRfTransfer(tier));
-            }
+                long maxRate = TconEvoConfig.moduleDraconicEvolution.getRfTransfer(tier);
+                if (maxRate < 2147483647L) {
+                    toTransfer = Math.min(toTransfer, (int)maxRate);
+                    }
+                }
             if (toTransfer > 0 && !simulate) {
                 setEnergyStored(stored + toTransfer);
             }
@@ -221,11 +218,19 @@ public class TraitEvolved extends StackableTrait implements EnergeticModifier {
         }
 
         @Override
-        public int extractEnergy(int maxExtract, boolean simulate, boolean ignoreTfrRate) {
+        public int extractEnergy(int maxReceive, boolean simulate, boolean ignoreTfrRate) {
+            int tier = TraitEvolved.getEvolvedTier(this.stack);
             int stored = getEnergyStored();
-            int toTransfer = Math.min(maxExtract, stored);
+            int capacity = getMaxEnergyStored(tier);
+            int toTransfer = Math.min(maxReceive, capacity - stored);
+            if (!ignoreTfrRate) {
+                long maxRate = TconEvoConfig.moduleDraconicEvolution.getRfTransfer(tier);
+                if (maxRate < 2147483647L) {
+                    toTransfer = Math.min(toTransfer, (int)maxRate);
+                }
+            }
             if (toTransfer > 0 && !simulate) {
-                setEnergyStored(stored - toTransfer);
+                setEnergyStored(stored + toTransfer);
             }
             return toTransfer;
         }
@@ -263,10 +268,12 @@ public class TraitEvolved extends StackableTrait implements EnergeticModifier {
         }
 
         private int getMaxEnergyStored(int tier) {
-            int capacity = TconEvoConfig.moduleDraconicEvolution.getBaseRfCapacity(tier);
+            long capL = TconEvoConfig.moduleDraconicEvolution.getBaseRfCapacity(tier);
+            int capacity = (capL > 2147483647L) ? Integer.MAX_VALUE : (int)capL;
             int energyTier = getEnergyTier();
             if (energyTier > 1) {
-                capacity <<= energyTier - 1;
+                long shifted = (long) capacity << energyTier - 1;
+                capacity = (shifted > 2147483647L) ? Integer.MAX_VALUE : (int)shifted;
             }
             return capacity;
         }

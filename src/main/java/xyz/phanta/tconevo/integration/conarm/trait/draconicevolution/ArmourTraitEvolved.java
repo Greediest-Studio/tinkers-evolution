@@ -33,7 +33,7 @@ public class ArmourTraitEvolved extends StackableArmourTrait implements Energeti
     private static final String TAG_EVOLVED_INIT = "ConArmEvolvedInit";
 
     public ArmourTraitEvolved(int level) {
-        super(NameConst.TRAIT_EVOLVED, TraitEvolved.COLOUR, 3, level);
+        super(NameConst.TRAIT_EVOLVED, TraitEvolved.COLOUR, 10, level);
         if (level == 1) {
             TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.ARMOUR_TRAIT_EVOLVED, s -> {
                 EvolvedArmourCap cap = new EvolvedArmourCap(s);
@@ -47,7 +47,6 @@ public class ArmourTraitEvolved extends StackableArmourTrait implements Energeti
     public void applyEffect(NBTTagCompound rootCompound, NBTTagCompound modifierTag) {
         if (modifierTag.getInteger("level") == 0) {
             super.applyEffect(rootCompound, modifierTag);
-            rootCompound.setBoolean(ModReinforced.TAG_UNBREAKABLE, true);
             // at tool building time, there's no possible way to know what armour type the item is, so we defer in that case
             EntityEquipmentSlot slot = ConArmHooks.INSTANCE.getArmourType(rootCompound);
             if (slot != null) {
