@@ -94,7 +94,7 @@ public class DraconicJeiCoreHooks {
             NBTTagCompound modTag = TinkerUtil.getModifierTag(tag, mod.identifier);
             ModifierNBT modData = ModifierNBT.readTag(modTag);
 
-            modData.level = upgradeRecipe.getRecipeTier() + 1;
+            modData.level = upgradeRecipe.getStage() + 1;
             modData.write(modTag);
             ItemStack inputStack = new ItemStack(templateStack.getItem());
             inputStack.setTagCompound(tag.copy());

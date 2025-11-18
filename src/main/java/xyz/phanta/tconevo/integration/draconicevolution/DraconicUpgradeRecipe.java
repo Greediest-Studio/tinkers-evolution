@@ -30,7 +30,8 @@ public class DraconicUpgradeRecipe implements IFusionRecipe {
 
     private final Modifier upgradeMod;
     private final ItemStack upgradeKey;
-    private final int tier;
+    private final int stage;
+    private final int requiredTier;
     private final List<Object> ingredients;
 
     public DraconicUpgradeRecipe(Modifier upgradeMod, String upgradeKey, int tier, Object... ingredients) {
@@ -39,7 +40,8 @@ public class DraconicUpgradeRecipe implements IFusionRecipe {
         }
         this.upgradeMod = upgradeMod;
         this.upgradeKey = new ItemStack(DEFeatures.toolUpgrade, 1, ToolUpgrade.NAME_TO_ID.get(upgradeKey));
-        this.tier = Math.min(tier, 3);
+        this.stage = tier;
+        this.requiredTier = Math.min(tier, 3);
         this.ingredients = new ArrayList<>(Arrays.asList(ingredients));
         this.ingredients.add(this.upgradeKey);
     }
@@ -48,9 +50,13 @@ public class DraconicUpgradeRecipe implements IFusionRecipe {
         return upgradeMod;
     }
 
+    public int getStage() {
+        return stage;
+    }
+
     @Override
     public int getRecipeTier() {
-        return tier;
+        return this.requiredTier;
     }
 
     @Override
@@ -60,7 +66,7 @@ public class DraconicUpgradeRecipe implements IFusionRecipe {
 
     @Override
     public long getIngredientEnergyCost() {
-        return UPGRADE_COSTS[Math.min(tier, UPGRADE_COSTS.length)];
+        return UPGRADE_COSTS[Math.min(stage, UPGRADE_COSTS.length)];
     }
 
     @Override
@@ -137,7 +143,7 @@ public class DraconicUpgradeRecipe implements IFusionRecipe {
             return "upgrade.de.upgradeNA.info";
         } else if (!inv.getStackInCore(1).isEmpty()) {
             return "outputObstructed";
-        } else if (TraitEvolved.getEvolvedTier(tool) < tier) {
+        } else if (TraitEvolved.getEvolvedTier(tool) < stage) {
             return "upgrade.de.upgradeLevelToHigh.info";
         }
         try {
@@ -148,13 +154,13 @@ public class DraconicUpgradeRecipe implements IFusionRecipe {
             return e.getMessage();
         }
         int currentLevel = ToolUtils.getTraitLevel(tool, upgradeMod.identifier);
-        if (currentLevel <= tier) {
+        if (currentLevel <= stage) {
             return "upgrade.de.upgradePrevLevelRequired.info";
-        } else if (currentLevel > tier + 1) {
+        } else if (currentLevel > stage + 1) {
             return "upgrade.de.upgradeApplied.info";
         }
         for (ICraftingInjector inj : inv.getInjectors()) {
-            if (!inj.getStackInPedestal().isEmpty() && inj.getPedestalTier() < tier) {
+            if (!inj.getStackInPedestal().isEmpty() && inj.getPedestalTier() < requiredTier) {
                 return "tierLow";
             }
         }
