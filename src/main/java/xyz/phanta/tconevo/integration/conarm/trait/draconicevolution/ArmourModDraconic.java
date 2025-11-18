@@ -31,7 +31,7 @@ public class ArmourModDraconic extends ArmorModifierTrait implements DraconicTie
     }
 
     public ArmourModDraconic(String name, EntityEquipmentSlot... eligibleEqSlots) {
-        this(name, ModifierDraconic.DEFAULT_COLOUR, 4, eligibleEqSlots);
+        this(name, ModifierDraconic.DEFAULT_COLOUR, 12, eligibleEqSlots);
     }
 
     // child classes should override applyDraconicEffect instead of this

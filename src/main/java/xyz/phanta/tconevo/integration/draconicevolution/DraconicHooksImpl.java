@@ -139,6 +139,8 @@ public class DraconicHooksImpl implements DraconicHooks {
                 Items.NETHER_STAR, Items.NETHER_STAR, DEFeatures.wyvernCore, DEFeatures.wyvernCore, "blockEmerald", "blockEmerald", DEFeatures.awakenedCore));
         FusionRecipeAPI.addRecipe(new DraconicUpgradeRecipe(upgradeMod, upgradeKey, 3,
                 DEFeatures.wyvernCore, DEFeatures.wyvernCore, DEFeatures.awakenedCore, DEFeatures.awakenedCore, Blocks.DRAGON_EGG, Blocks.DRAGON_EGG, DEFeatures.chaoticCore));
+        FusionRecipeAPI.addRecipe(new DraconicUpgradeRecipe(upgradeMod, upgradeKey, 4,
+                "coreStormy", "coreStormy", "coreChaotic", "coreChaotic", "ingotBalancedMatrix", "ingotBalancedMatrix", "coreOrdered"));
     }
 
     @Override

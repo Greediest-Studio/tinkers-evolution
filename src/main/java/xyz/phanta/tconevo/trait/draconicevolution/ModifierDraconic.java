@@ -34,7 +34,7 @@ public class ModifierDraconic extends ModifierTrait implements DraconicTieredMod
     }
 
     public ModifierDraconic(String name, Category... eligibleCategories) {
-        this(name, DEFAULT_COLOUR, 4, eligibleCategories);
+        this(name, DEFAULT_COLOUR, 10, eligibleCategories);
     }
 
     // child classes should override applyDraconicEffect instead of this

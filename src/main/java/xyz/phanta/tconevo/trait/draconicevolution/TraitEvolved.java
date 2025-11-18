@@ -218,11 +218,10 @@ public class TraitEvolved extends StackableTrait implements EnergeticModifier {
         }
 
         @Override
-        public int extractEnergy(int maxReceive, boolean simulate, boolean ignoreTfrRate) {
+        public int extractEnergy(int maxExtract, boolean simulate, boolean ignoreTfrRate) {
             int tier = TraitEvolved.getEvolvedTier(this.stack);
             int stored = getEnergyStored();
-            int capacity = getMaxEnergyStored(tier);
-            int toTransfer = Math.min(maxReceive, capacity - stored);
+            int toTransfer = Math.min(maxExtract, stored);
             if (!ignoreTfrRate) {
                 long maxRate = TconEvoConfig.moduleDraconicEvolution.getRfTransfer(tier);
                 if (maxRate < 2147483647L) {
@@ -230,7 +229,7 @@ public class TraitEvolved extends StackableTrait implements EnergeticModifier {
                 }
             }
             if (toTransfer > 0 && !simulate) {
-                setEnergyStored(stored + toTransfer);
+                setEnergyStored(stored - toTransfer);
             }
             return toTransfer;
         }

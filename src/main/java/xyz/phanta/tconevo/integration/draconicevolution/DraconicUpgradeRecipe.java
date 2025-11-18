@@ -26,7 +26,7 @@ import java.util.*;
 
 public class DraconicUpgradeRecipe implements IFusionRecipe {
 
-    private static final int[] UPGRADE_COSTS = { 32000, 512000, 32000000, 256000000 };
+    private static final Long[] UPGRADE_COSTS = { 32000L, 512000L, 32000000L, 256000000L, 81920000000L};
 
     private final Modifier upgradeMod;
     private final ItemStack upgradeKey;
@@ -34,12 +34,12 @@ public class DraconicUpgradeRecipe implements IFusionRecipe {
     private final List<Object> ingredients;
 
     public DraconicUpgradeRecipe(Modifier upgradeMod, String upgradeKey, int tier, Object... ingredients) {
-        if (tier < 0 || tier >= UPGRADE_COSTS.length) {
+        if (tier < 0) {
             throw new IllegalArgumentException("Bad draconic upgrade level: " + tier);
         }
         this.upgradeMod = upgradeMod;
         this.upgradeKey = new ItemStack(DEFeatures.toolUpgrade, 1, ToolUpgrade.NAME_TO_ID.get(upgradeKey));
-        this.tier = tier;
+        this.tier = Math.min(tier, 3);
         this.ingredients = new ArrayList<>(Arrays.asList(ingredients));
         this.ingredients.add(this.upgradeKey);
     }
@@ -60,7 +60,7 @@ public class DraconicUpgradeRecipe implements IFusionRecipe {
 
     @Override
     public long getIngredientEnergyCost() {
-        return UPGRADE_COSTS[tier];
+        return UPGRADE_COSTS[Math.min(tier, UPGRADE_COSTS.length)];
     }
 
     @Override
