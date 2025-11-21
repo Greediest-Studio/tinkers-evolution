@@ -9,6 +9,10 @@ import xyz.phanta.tconevo.TconEvoConfig;
 import xyz.phanta.tconevo.constant.NameConst;
 import xyz.phanta.tconevo.integration.bloodmagic.BloodMagicHooks;
 
+import java.util.Objects;
+
+import static net.minecraft.entity.EntityList.getEntityString;
+
 public class TraitCrystalys extends AbstractTrait {
 
     public TraitCrystalys() {
@@ -18,7 +22,7 @@ public class TraitCrystalys extends AbstractTrait {
     @Override
     public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target,
                          float damageDealt, boolean wasCritical, boolean wasHit) {
-        if (target.world.isRemote || !wasHit || target.isEntityAlive() || target instanceof EntityAnimal) {
+        if (target.world.isRemote || !wasHit || target.isEntityAlive() || target instanceof EntityAnimal || Objects.requireNonNull(getEntityString(target)).toLowerCase().contains("dummy")) {
             return;
         }
         double odds = TconEvoConfig.moduleBloodMagic.crystalysDropProbability;

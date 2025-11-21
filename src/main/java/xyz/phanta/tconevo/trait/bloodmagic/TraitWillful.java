@@ -6,6 +6,10 @@ import slimeknights.tconstruct.library.traits.AbstractTrait;
 import xyz.phanta.tconevo.constant.NameConst;
 import xyz.phanta.tconevo.integration.bloodmagic.BloodMagicHooks;
 
+import java.util.Objects;
+
+import static net.minecraft.entity.EntityList.getEntityString;
+
 public class TraitWillful extends AbstractTrait {
 
     public static final int COLOUR = 0x8ecbcc;
@@ -17,7 +21,7 @@ public class TraitWillful extends AbstractTrait {
     @Override
     public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target,
                          float damageDealt, boolean wasCritical, boolean wasHit) {
-        if (target.world.isRemote || !wasHit || target.isEntityAlive()) {
+        if (target.world.isRemote || !wasHit || target.isEntityAlive() || Objects.requireNonNull(getEntityString(target)).toLowerCase().contains("dummy")) {
             return;
         }
         BloodMagicHooks.INSTANCE.handleDemonWillDrops(player, target, tool);
