@@ -24,7 +24,7 @@ public class TraitEnergized extends StackableTrait implements EnergeticModifier 
     private static final String TAG_ENERGY = "EnergizedEnergy";
 
     public TraitEnergized(int level) {
-        super(NameConst.TRAIT_ENERGIZED, COLOUR, 10, level);
+        super(NameConst.TRAIT_ENERGIZED, COLOUR, 2, level);
         if (level == 1) {
             TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.TRAIT_ENERGIZED,
                     s -> new CapabilityBroker().with(CapabilityEnergy.ENERGY, new EnergizedEnergyStore(s)));
@@ -71,9 +71,8 @@ public class TraitEnergized extends StackableTrait implements EnergeticModifier 
 
         @Override
         public int getMaxEnergyStored() {
-            int level = ToolUtils.getTraitLevel(stack, NameConst.TRAIT_ENERGIZED);
-            // 每级容量翻倍: 基础容量 * 2^(level-1)
-            return TconEvoConfig.general.traitEnergizedEnergyCapacityTools * (1 << (level - 1));
+            return ToolUtils.getTraitLevel(stack, NameConst.TRAIT_ENERGIZED)
+                    * TconEvoConfig.general.traitEnergizedEnergyCapacityTools;
         }
 
     }
