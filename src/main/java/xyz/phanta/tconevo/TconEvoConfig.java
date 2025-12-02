@@ -201,7 +201,11 @@ public class TconEvoConfig {
         @Config.RangeInt(min = 0)
         public int traitEnergizedEnergyCostTools = 320;
 
-        @Config.Comment("The energy capacity granted per trait level on tools with the energized trait.")
+        @Config.Comment({
+                "The base energy capacity on tools with the energized trait.",
+                "Actual capacity doubles per level: base * 2^(level-1).",
+                "Level 1: 400k, Level 2: 800k, Level 3: 1.6M, ..., Level 10: 204.8M RF"
+        })
         @Config.RangeInt(min = 1)
         public int traitEnergizedEnergyCapacityTools = 400000;
 
@@ -213,7 +217,9 @@ public class TconEvoConfig {
         public int traitEnergizedEnergyCostArmour = 1024;
 
         @Config.Comment({
-                "The energy capacity granted per trait level on armour with the energized trait.",
+                "The base energy capacity on armour with the energized trait.",
+                "Actual capacity doubles per level: base * 2^(level-1).",
+                "Level 1: 400k, Level 2: 800k, Level 3: 1.6M, ..., Level 10: 204.8M RF",
                 "Only useful with Construct's Armoury installed."
         })
         @Config.RangeInt(min = 0)
