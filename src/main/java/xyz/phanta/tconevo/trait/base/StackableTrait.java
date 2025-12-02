@@ -85,7 +85,7 @@ public abstract class StackableTrait extends AbstractTrait implements Incrementa
         ModifierNBT modData;
         int modDataNdx = TinkerUtil.getIndexInCompoundList(modDataTags, mod.getBaseIdentifier());
         if (modDataNdx > -1) {
-            NBTTagCompound modDataTag = (NBTTagCompound) modDataTags.get(modDataNdx);
+            NBTTagCompound modDataTag = modDataTags.getCompoundTagAt(modDataNdx);
             modDataTags.set(modDataNdx, newDataTag);
             modData = ModifierNBT.readTag(modDataTag);
         } else {
