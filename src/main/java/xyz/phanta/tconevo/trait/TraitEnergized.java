@@ -25,10 +25,16 @@ public class TraitEnergized extends StackableTrait implements EnergeticModifier 
 
     public TraitEnergized(int level) {
         super(NameConst.TRAIT_ENERGIZED, COLOUR, 10, level);
+        // Register capability for both base identifier and level-specific identifier
+        // Base identifier is used in modifiers list, level identifier is used in traits list
         if (level == 1) {
+            // Register base identifier capability (shared by all levels)
             TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.TRAIT_ENERGIZED,
                     s -> new CapabilityBroker().with(CapabilityEnergy.ENERGY, new EnergizedEnergyStore(s)));
         }
+        // Also register level-specific identifier for compatibility
+        TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.TRAIT_ENERGIZED + level,
+                s -> new CapabilityBroker().with(CapabilityEnergy.ENERGY, new EnergizedEnergyStore(s)));
         MinecraftForge.EVENT_BUS.register(this);
     }
 

@@ -38,9 +38,9 @@ public abstract class StackableTrait extends AbstractTrait implements Incrementa
         this.baseIdentifier = identifier;
         this.levelMax = levelMax;
         this.level = level;
-        if (level == 1) { // 4Head
-            TinkerRegistry.registerModifierAlias(this, baseIdentifier);
-        }
+        // Register alias for all levels to ensure discoverability
+        // This allows other mods/scripts to reference traits by base identifier
+        TinkerRegistry.registerModifierAlias(this, baseIdentifier);
         aspects.clear();
         addAspects(new ModifierAspect.LevelAspect(this, levelMax), new ModifierAspect.DataAspect(this, color));
     }
