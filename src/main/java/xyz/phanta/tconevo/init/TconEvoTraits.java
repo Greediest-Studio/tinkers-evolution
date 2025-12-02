@@ -65,7 +65,9 @@ public class TconEvoTraits {
     public static final TraitCulling TRAIT_CULLING = new TraitCulling();
     public static final TraitDeadlyPrecision TRAIT_DEADLY_PRECISION = new TraitDeadlyPrecision();
     public static final TraitEnergized[] TRAIT_ENERGIZED = {
-            new TraitEnergized(1), new TraitEnergized(2)
+            new TraitEnergized(1), new TraitEnergized(2), new TraitEnergized(3), new TraitEnergized(4),
+            new TraitEnergized(5), new TraitEnergized(6), new TraitEnergized(7), new TraitEnergized(8),
+            new TraitEnergized(9), new TraitEnergized(10)
     };
     public static final TraitExecutor TRAIT_EXECUTOR = new TraitExecutor();
     public static final TraitFertilizing TRAIT_FERTILIZING = new TraitFertilizing();

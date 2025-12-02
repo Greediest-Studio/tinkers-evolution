@@ -23,7 +23,7 @@ import xyz.phanta.tconevo.util.ToolUtils;
 public class ArmourTraitEnergized extends StackableArmourTrait implements EnergeticModifier {
 
     public ArmourTraitEnergized(int level) {
-        super(NameConst.TRAIT_ENERGIZED, TraitEnergized.COLOUR, 2, level);
+        super(NameConst.TRAIT_ENERGIZED, TraitEnergized.COLOUR, 10, level);
         if (level == 1) {
             TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.ARMOUR_TRAIT_ENERGIZED,
                     s -> new CapabilityBroker().with(CapabilityEnergy.ENERGY, new EnergizedArmourEnergyStore(s)));
@@ -60,8 +60,9 @@ public class ArmourTraitEnergized extends StackableArmourTrait implements Energe
 
         @Override
         public int getMaxEnergyStored() {
-            return ToolUtils.getTraitLevel(stack, NameConst.ARMOUR_TRAIT_ENERGIZED)
-                    * TconEvoConfig.general.traitEnergizedEnergyCapacityArmour;
+            int level = ToolUtils.getTraitLevel(stack, NameConst.ARMOUR_TRAIT_ENERGIZED);
+            // 每级容量翻倍: 基础容量 * 2^(level-1)
+            return TconEvoConfig.general.traitEnergizedEnergyCapacityArmour * (1 << (level - 1));
         }
 
     }
