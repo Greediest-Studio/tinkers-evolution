@@ -765,7 +765,7 @@ public class TconEvoMaterials {
                 .withStatsHandle(0.75F, 140)
                 .withStatsExtra(175)
                 .withStatsBow(0.75F, 1.5F, 4F)
-                .withTraits(PartType.TOOL, TconEvoTraits.TRAIT_ENERGIZED[2], TconEvoTraits.TRAIT_JUGGERNAUT)
+                .withTraits(PartType.TOOL, TconEvoTraits.TRAIT_ENERGIZED[1], TconEvoTraits.TRAIT_JUGGERNAUT)
                 .build();
         GELID_GEM = new MaterialBuilder(NameConst.MAT_GELID_GEM, 0x3aadad, MaterialForm.GEM, "GelidCrystal")
                 .requiresOres("gemGelidCrystal")
@@ -775,7 +775,7 @@ public class TconEvoMaterials {
                 .withStatsHandle(1F, 90)
                 .withStatsExtra(135)
                 .withStatsBow(1.5F, 1.1F, 0F)
-                .withTraits(PartType.TOOL, TconEvoTraits.TRAIT_ENERGIZED[2], TconEvoTraits.TRAIT_AFTERSHOCK[1])
+                .withTraits(PartType.TOOL, TconEvoTraits.TRAIT_ENERGIZED[1], TconEvoTraits.TRAIT_AFTERSHOCK[1])
                 .build();
         FLUXED_STRING = new MaterialBuilder(NameConst.MAT_FLUXED_STRING, 0xd7cece, MaterialForm.RAW, "stringFluxed")
                 .requiresOres("stringFluxed")

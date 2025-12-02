@@ -312,11 +312,11 @@ public class TconEvoArmourMaterials {
                 .build();
         new ArmourMaterialBuilder(TconEvoMaterials.GELID_ENDERIUM)
                 .withStatsArmour(24F, 27F, 0.75F, 17F, 4F, 21F)
-                .withTraits(ArmourPartType.ARMOUR, TconEvoArmourTraits.TRAIT_ENERGIZED[2], TconEvoArmourTraits.TRAIT_CHILLING_TOUCH)
+                .withTraits(ArmourPartType.ARMOUR, TconEvoArmourTraits.TRAIT_ENERGIZED[1], TconEvoArmourTraits.TRAIT_CHILLING_TOUCH)
                 .build();
         new ArmourMaterialBuilder(TconEvoMaterials.GELID_GEM)
                 .withStatsArmour(19F, 23F, 1F, 14F, 7F, 16.5F)
-                .withTraits(ArmourPartType.ARMOUR, TconEvoArmourTraits.TRAIT_ENERGIZED[2], TconEvoArmourTraits.TRAIT_REACTIVE)
+                .withTraits(ArmourPartType.ARMOUR, TconEvoArmourTraits.TRAIT_ENERGIZED[1], TconEvoArmourTraits.TRAIT_REACTIVE)
                 .build();
 
         // thaumcraft
