@@ -24,10 +24,9 @@ public abstract class StackableArmourTrait extends AbstractArmorTrait implements
         this.baseIdentifier = identifier + NameConst.ARMOUR_SUFFIX;
         this.levelMax = levelMax;
         this.level = level;
-        // Register alias for all levels to ensure discoverability
-        // Register both with _armor suffix and without for compatibility
-        TinkerRegistry.registerModifierAlias(this, baseIdentifier);
-        TinkerRegistry.registerModifierAlias(this, identifier); // without _armor suffix
+        if (level == 1) { // 4Head
+            TinkerRegistry.registerModifierAlias(this, baseIdentifier);
+        }
         aspects.clear();
         addAspects(new ModifierAspect.LevelAspect(this, levelMax), new ModifierAspect.DataAspect(this, color));
     }

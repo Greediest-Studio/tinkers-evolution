@@ -24,21 +24,10 @@ public class ArmourTraitEnergized extends StackableArmourTrait implements Energe
 
     public ArmourTraitEnergized(int level) {
         super(NameConst.TRAIT_ENERGIZED, TraitEnergized.COLOUR, 10, level);
-        // Register capability for both base identifier and level-specific identifier
-        // Base identifier is used in modifiers list, level identifier is used in traits list
         if (level == 1) {
-            // Register base identifier capability (shared by all levels)
             TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.ARMOUR_TRAIT_ENERGIZED,
                     s -> new CapabilityBroker().with(CapabilityEnergy.ENERGY, new EnergizedArmourEnergyStore(s)));
-            // Also register without _armor suffix for compatibility with materials that reference tool trait
-            TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.TRAIT_ENERGIZED,
-                    s -> new CapabilityBroker().with(CapabilityEnergy.ENERGY, new EnergizedArmourEnergyStore(s)));
         }
-        // Also register level-specific identifiers for compatibility
-        TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.ARMOUR_TRAIT_ENERGIZED + level,
-                s -> new CapabilityBroker().with(CapabilityEnergy.ENERGY, new EnergizedArmourEnergyStore(s)));
-        TconEvoMod.PROXY.getToolCapHandler().addModifierCap(NameConst.TRAIT_ENERGIZED + level,
-                s -> new CapabilityBroker().with(CapabilityEnergy.ENERGY, new EnergizedArmourEnergyStore(s)));
         MinecraftForge.EVENT_BUS.register(this);
     }
 
