@@ -7,6 +7,9 @@ import com.buuz135.industrial.proxy.ItemRegistry;
 import io.github.phantamanta44.libnine.util.nullity.Reflected;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -37,10 +40,12 @@ public class ForegoingHooksImpl implements ForegoingHooks {
     @Override
     public void onPostInit(FMLPostInitializationEvent event) {
         // Essence Metal Ingot 流体筛分机配方已移除
+        Item ironItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation("minecraft", "iron_ingot"));
+        ItemStack ironStack = ironItem != null ? new ItemStack(ironItem) : ItemStack.EMPTY;
         addFluidSieveRecipe(
-                new FluidStack(FluidsRegistry.MEAT, 1000),
-                new ItemStack(Items.IRON_INGOT),
-                ItemEdible.Type.MEAT_INGOT_RAW.newStack(1));
+            new FluidStack(FluidsRegistry.MEAT, 1000),
+            ironStack,
+            ItemEdible.Type.MEAT_INGOT_RAW.newStack(1));
     }
 
     @Override
