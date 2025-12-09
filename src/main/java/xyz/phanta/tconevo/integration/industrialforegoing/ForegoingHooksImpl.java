@@ -36,10 +36,7 @@ public class ForegoingHooksImpl implements ForegoingHooks {
 
     @Override
     public void onPostInit(FMLPostInitializationEvent event) {
-        addFluidSieveRecipe(
-                new FluidStack(FluidsRegistry.ESSENCE, 1000),
-                ItemMaterial.Type.COALESCENCE_MATRIX.newStack(1),
-                TconEvoItems.METAL.newStack(ItemMetal.Type.ESSENCE_METAL, ItemMetal.Form.INGOT, 1));
+        // Essence Metal Ingot 流体筛分机配方已移除
         addFluidSieveRecipe(
                 new FluidStack(FluidsRegistry.MEAT, 1000),
                 new ItemStack(Items.IRON_INGOT),
