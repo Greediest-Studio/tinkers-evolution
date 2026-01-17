@@ -1,7 +1,9 @@
 package xyz.phanta.tconevo.material;
 
 import io.github.phantamanta44.libnine.util.helper.OreDictUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import xyz.phanta.tconevo.TconEvoConfig;
@@ -42,6 +44,26 @@ public interface RegCondition {
         public boolean isSatisfied() {
             for (String oreKey : oreKeys) {
                 if (OreDictUtils.exists(oreKey)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    }
+
+    class ItemExists implements RegCondition {
+
+        private final String[] itemIds;
+
+        public ItemExists(String[] itemIds) {
+            this.itemIds = itemIds;
+        }
+
+        @Override
+        public boolean isSatisfied() {
+            for (String itemId : itemIds) {
+                if (ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemId))) {
                     return true;
                 }
             }

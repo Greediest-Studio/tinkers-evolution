@@ -1,9 +1,13 @@
 package xyz.phanta.tconevo.material;
 
 import com.google.common.collect.Sets;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.ModContainer;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.fluid.FluidMolten;
 import slimeknights.tconstruct.library.materials.*;
@@ -45,6 +49,8 @@ public class MaterialBuilder {
     private boolean craftable = false, castable = false;
     @Nullable
     private Supplier<Fluid> fluidGetter = null;
+    @Nullable
+    private Supplier<ItemStack> representativeItemGetter = null;
     private int fluidTemperature = 273; // used for generated fluids
     private final Map<PartType, LazyAccum<ITrait>> traits = new EnumMap<>(PartType.class);
 
@@ -73,6 +79,11 @@ public class MaterialBuilder {
     // requires ONE OF these oredict entries
     public MaterialBuilder requiresOres(String... oreKeys) {
         return requires(new RegCondition.OreDictExists(oreKeys));
+    }
+
+    // requires ONE OF these items
+    public MaterialBuilder requiresItems(String... itemIds) {
+        return requires(new RegCondition.ItemExists(itemIds));
     }
 
     // requires ONE OF these materials
@@ -151,6 +162,18 @@ public class MaterialBuilder {
         return setCastable(() -> FluidRegistry.getFluid(fluidId), fallbackTemp);
     }
 
+    public MaterialBuilder setRepresentativeItem(Supplier<ItemStack> representativeItemGetter) {
+        this.representativeItemGetter = representativeItemGetter;
+        return this;
+    }
+
+    public MaterialBuilder setRepresentativeItem(String itemId, int meta) {
+        return setRepresentativeItem(() -> {
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
+            return item != null ? new ItemStack(item, 1, meta) : ItemStack.EMPTY;
+        });
+    }
+
     public MaterialBuilder withTraits(PartType partType, LazyAccum<ITrait> traitCollector) {
         traits.put(partType, traitCollector);
         return this;
@@ -191,7 +214,7 @@ public class MaterialBuilder {
                 TinkerRegistry.addMaterialStats(material, statsObj);
             }
             if (notBlacklisted) {
-                MaterialDefinition.register(material, form, oreName, conditions, traits);
+                MaterialDefinition.register(material, form, oreName, conditions, traits, representativeItemGetter);
                 TinkerRegistry.addMaterial(material);
                 if (needsPriority) {
                     TconReflect.prioritizeMaterial(material);

@@ -1,6 +1,7 @@
 package xyz.phanta.tconevo.material;
 
 import io.github.phantamanta44.libnine.util.helper.OreDictUtils;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
+import javax.annotation.Nullable;
 
 public class MaterialDefinition {
 
@@ -25,8 +28,9 @@ public class MaterialDefinition {
                                 MaterialForm form,
                                 String oreName,
                                 List<RegCondition> conditions,
-                                Map<PartType, LazyAccum<ITrait>> traits) {
-        materialDefs.add(new MaterialDefinition(material, form, oreName, conditions, traits));
+                                Map<PartType, LazyAccum<ITrait>> traits,
+                                @Nullable Supplier<ItemStack> representativeItemGetter) {
+        materialDefs.add(new MaterialDefinition(material, form, oreName, conditions, traits, representativeItemGetter));
     }
 
     public static void initMaterialProperties() {
@@ -57,17 +61,21 @@ public class MaterialDefinition {
 
     private final List<RegCondition> conditions;
     private final Map<PartType, LazyAccum<ITrait>> traits;
+    @Nullable
+    private final Supplier<ItemStack> representativeItemGetter;
 
     private MaterialDefinition(Material material,
                                MaterialForm form,
                                String oreName,
                                List<RegCondition> conditions,
-                               Map<PartType, LazyAccum<ITrait>> traits) {
+                               Map<PartType, LazyAccum<ITrait>> traits,
+                               @Nullable Supplier<ItemStack> representativeItemGetter) {
         this.material = material;
         this.form = form;
         this.oreName = oreName;
         this.conditions = conditions;
         this.traits = traits;
+        this.representativeItemGetter = representativeItemGetter;
     }
 
     private void initProperties() {
@@ -97,11 +105,21 @@ public class MaterialDefinition {
                 }
             }
         }
-        (form == MaterialForm.METAL ? METAL_PREFIXES.stream() : form.entries.stream().map(e -> e.prefix))
-                .map(prefix -> prefix + oreName)
-                .filter(OreDictUtils::exists)
-                .findFirst()
-                .ifPresent(material::setRepresentativeItem);
+        boolean representativeSet = false;
+        if (representativeItemGetter != null) {
+            ItemStack repStack = representativeItemGetter.get();
+            if (repStack != null && !repStack.isEmpty()) {
+                material.setRepresentativeItem(repStack);
+                representativeSet = true;
+            }
+        }
+        if (!representativeSet) {
+            (form == MaterialForm.METAL ? METAL_PREFIXES.stream() : form.entries.stream().map(e -> e.prefix))
+                    .map(prefix -> prefix + oreName)
+                    .filter(OreDictUtils::exists)
+                    .findFirst()
+                    .ifPresent(material::setRepresentativeItem);
+        }
         Fluid fluid = material.getFluid();
         if (fluid != null) {
             if (form == MaterialForm.METAL) {

@@ -113,7 +113,8 @@ public class TconEvoMaterials {
                 .withTraits(PartType.TOOL, TconEvoTraits.TRAIT_CRYSTALLINE, TconEvoTraits.TRAIT_AFTERSHOCK[0])
                 .build();
         AA_VOID = new MaterialBuilder(NameConst.MAT_AA_VOID, 0x343434, MaterialForm.GEM, "Void")
-                .requiresOres("crystalVoid")
+                .requiresItems("actuallyadditions:item_crystal")
+                .setRepresentativeItem("actuallyadditions:item_crystal", 3)
                 .setCraftable()
                 .withStatsHead(170, 3F, 4F, HarvestLevels.DIAMOND)
                 .withStatsMagic(170, 4F, 0.75F, HarvestLevels.DIAMOND)
