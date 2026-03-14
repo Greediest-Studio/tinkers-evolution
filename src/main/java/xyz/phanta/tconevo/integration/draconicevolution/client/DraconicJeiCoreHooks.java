@@ -80,7 +80,7 @@ public class DraconicJeiCoreHooks {
         if (!(recipe instanceof DraconicUpgradeRecipe)) {
             return;
         }
-
+        /*
         DraconicUpgradeRecipe upgradeRecipe = (DraconicUpgradeRecipe) recipe;
         Modifier mod = upgradeRecipe.getModifier();
         List<ItemStack> inputStacks = new ArrayList<>(), outputStacks = new ArrayList<>();
@@ -108,6 +108,7 @@ public class DraconicJeiCoreHooks {
         }
         layout.getItemStacks().set(0, inputStacks);
         layout.getItemStacks().set(1, outputStacks);
+        */
     }
 
 }

@@ -52,6 +52,9 @@ public class ArtifactRegistry {
 
     @Nullable
     public Artifact<?> getArtifact(String id) {
+        if (!TconEvoConfig.artifacts.enabled) {
+            return null;
+        }
         if (!artifactsLoaded) {
             TconEvoMod.LOGGER.error("Artifacts were looked up before being loaded!", new IllegalStateException());
             return null;
@@ -60,6 +63,9 @@ public class ArtifactRegistry {
     }
 
     public Set<String> getAllArtifactIds() {
+        if (!TconEvoConfig.artifacts.enabled) {
+            return Collections.emptySet();
+        }
         if (!artifactsLoaded) {
             TconEvoMod.LOGGER.error("Artifacts were looked up before being loaded!", new IllegalStateException());
             return Collections.emptySet();
@@ -67,7 +73,11 @@ public class ArtifactRegistry {
         return Collections.unmodifiableSet(artifactRegistry.keySet());
     }
 
+
     public Collection<Artifact<?>> getAllArtifacts() {
+        if (!TconEvoConfig.artifacts.enabled) {
+            return Collections.emptyList();
+        }
         if (!artifactsLoaded) {
             TconEvoMod.LOGGER.error("Artifacts were looked up before being loaded!", new IllegalStateException());
             return Collections.emptyList();
